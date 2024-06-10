@@ -1,0 +1,31 @@
+﻿@using MyShoeWorldApp.Models
+@model IEnumerable<Product>
+
+@{
+    ViewBag.Title = "Products List";
+}
+
+<h1>@ViewBag.PageTitle</h1>
+<hr />
+<div class="container text-center">
+    <div class="row">
+        @foreach (Product product in Model)
+        {
+            <div class="card shadow-lg m-2 bg-body-tertiary rounded" style="width: 20rem;">
+                <img src=@Url.Content(product.Picture) class="card-img-top" alt=@product.ProductName>
+                <div class="card-body">
+                    <h5 class="card-title">@product.ProductName</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <hr>
+                    @Html.ActionLink("View Details", "Details", "Products", new { id = product.ProductId }, new { @class = "btn btn-dark" }) | @Html.ActionLink("Add To Cart", "AddToCart", "Carts", new { id = product.ProductId }, new { @class = "btn btn-success" })
+                    @if (Session["Role"].ToString() == "Admin")
+                    {
+                        <hr />
+                        @Html.ActionLink("Remove Product", "Delete", "Products", new { id = product.ProductId }, new { @class = "btn btn-dark" })
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
